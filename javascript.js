@@ -1,7 +1,4 @@
 
-
-
-
 function getComputerChoice() {
     let rand = Math.random()
     if (rand < 0.33)
@@ -17,18 +14,6 @@ function getComputerChoice() {
 
 }
 
-
-let choice = parseInt(prompt("input 1: rock, 2: scissors, 3: paper"))
-function getHumanChoice(choice) {
-    if (choice === 1)
-        return "rock"
-    if (choice === 2) {
-        return "scissors"
-    }
-    if (choice === 3){
-        return "paper"
-    }
-}
 var humanScore = 0
 var computerScore = 0
 
@@ -58,24 +43,53 @@ function playRound(getHumanChoice, getComputerChoice) {
     } 
     console.log("Score: Human " + humanScore + " - " + computerScore + " Computer")
 
-}
-
-
-const humanSelection = getHumanChoice(choice);
-const computerSelection = getComputerChoice();
-playRound(humanSelection, computerSelection)
-
-function playGame() {
-    for (let i = 0; i < 5; i++) {
-        let choice = parseInt(prompt("Round " + (i+1)))
-        const humanSelection = getHumanChoice(choice);
-        const computerSelection = getComputerChoice();
-        playRound(humanSelection, computerSelection)
-
+    if (humanScore === 5) {
+        console.log("Nice! You win!")
+        winnerDiv.textContent = "Nice! You win!"
+        humanScore = 0
+        computerScore = 0
+    } else if (computerScore === 5) {
+        console.log("You lose!")
+        winnerDiv.textContent = "You lose!"
+        humanScore = 0
+        computerScore = 0
     }
-    
-
+    scoreDiv.textContent = "Score: Human " + humanScore + " - " + computerScore + " Computer"
 }
 
 
-playGame()
+const buttonRock = document.createElement("button")
+const buttonPaper = document.createElement("button")
+const buttonScissors = document.createElement("button")
+
+buttonPaper.textContent = "Paper"
+buttonRock.textContent = "Rock"
+buttonScissors.textContent = "Scissors"
+
+
+buttonRock.addEventListener("click", function() {
+    playRound("rock", getComputerChoice())
+})
+
+buttonPaper.addEventListener("click", function() {
+    playRound("paper", getComputerChoice())
+})
+
+buttonScissors.addEventListener("click", function() {
+    playRound("scissors", getComputerChoice())
+})
+
+
+const div = document.createElement("div")
+div.appendChild(buttonRock)
+div.appendChild(buttonPaper)
+div.appendChild(buttonScissors)
+
+const scoreDiv = document.createElement("div")
+scoreDiv.textContent = "Score: Human " + humanScore + " - " + computerScore + " Computer"
+div.appendChild(scoreDiv)
+
+document.body.appendChild(div)
+
+const winnerDiv = document.createElement("div")
+div.appendChild(winnerDiv)
